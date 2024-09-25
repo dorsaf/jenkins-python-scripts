@@ -26,7 +26,6 @@ def update_xml(file_path, tag, new_value):
         sys.exit(1)
 
 if __name__ == "__main__":
-    print(sys.argv)
     if len(sys.argv) != 4:
         print("Usage: python update_xml.py <file_path> <tag> <new_value>")
         sys.exit(1)
