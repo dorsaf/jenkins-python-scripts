@@ -38,14 +38,17 @@ pipeline {
         stage('Update XML') {
             steps {
                 script {
-                    def filePath = '/var/lib/jenkins/jobs/test/jobs/pipeline_automation/builds/4/build.xml'
+                    def inputFilePath = '/var/lib/jenkins/jobs/test/jobs/pipeline_automation/builds/4/build.xml'
+                    def outputFilePath = '/tmp/temp_build.xml'
                     def tagPath = 'changelogFile'
                     def newValue = '/var/lib/jenkins/jobs/test/jobs/pipeline_automation/builds/4/changelog18258533740849202704.xml'
 
                     // Run the Python script to update the XML file in a temp location
                     sh """
-                    python3 update_xml.py /tmp/temp_build.xml ${tagPath} ${newValue}
-                    mv /tmp/temp_build.xml ${filePath}
+                    python3 update_xml.py ${inputFilePath} ${outputFilePath} ${tagPath} ${newValue}
+
+                    # If the update was successful, move the modified file back to the original location
+                    mv ${outputFilePath} ${inputFilePath}
                     """
                 }
             }
